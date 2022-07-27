@@ -8,7 +8,7 @@ import (
 
 func ChannelDemo() {
 	//Channel for goroutines communication
-	ch := make(chan int)
+	ch := make(chan int, 3)
 
 	//Waitgroup for coordination
 	wg := &sync.WaitGroup{}
