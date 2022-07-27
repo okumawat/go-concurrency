@@ -7,12 +7,13 @@ import (
 	"time"
 
 	"github.com/okumawat/go-concurrency/cache"
+	"github.com/okumawat/go-concurrency/channel"
 	"github.com/okumawat/go-concurrency/dao"
 )
 
 var random = rand.New(rand.NewSource(time.Now().UnixMilli()))
 
-func main() {
+func CacheDemo() {
 	wg := &sync.WaitGroup{}
 	mutex := &sync.RWMutex{}
 
@@ -48,4 +49,9 @@ func main() {
 	//Wait for tasks to finish
 	wg.Wait()
 	fmt.Println("Processing done.")
+}
+
+func main() {
+	//CacheDemo()
+	channel.ChannelDemo()
 }
