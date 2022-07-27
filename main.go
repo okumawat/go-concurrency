@@ -14,7 +14,7 @@ var random = rand.New(rand.NewSource(time.Now().UnixMilli()))
 
 func main() {
 	wg := &sync.WaitGroup{}
-	mutex := &sync.Mutex{}
+	mutex := &sync.RWMutex{}
 
 	for i := 0; i < 15; i++ {
 		bookId := random.Intn(10)
@@ -22,7 +22,7 @@ func main() {
 		wg.Add(2)
 
 		//Get data from cache
-		go func(id int, wg *sync.WaitGroup, mt *sync.Mutex) {
+		go func(id int, wg *sync.WaitGroup, mt *sync.RWMutex) {
 			if b, ok := cache.GetBookById(id, mt); ok {
 				fmt.Println("From cache:", b.String())
 			} else {
@@ -32,7 +32,7 @@ func main() {
 		}(bookId, wg, mutex)
 
 		//Get data from db
-		go func(id int, wg *sync.WaitGroup, mt *sync.Mutex) {
+		go func(id int, wg *sync.WaitGroup, mt *sync.RWMutex) {
 			if b, ok := dao.GetBookById(id, mt); ok {
 				fmt.Println("From database:", b.String())
 			} else {

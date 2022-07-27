@@ -8,14 +8,14 @@ import (
 
 var cache = map[int]model.Book{}
 
-func GetBookById(id int, mt *sync.Mutex) (model.Book, bool) {
-	mt.Lock()
+func GetBookById(id int, mt *sync.RWMutex) (model.Book, bool) {
+	mt.RLock()
 	b, ok := cache[id]
-	mt.Unlock()
+	mt.RUnlock()
 	return b, ok
 }
 
-func UpdateCache(id int, b model.Book, mt *sync.Mutex) {
+func UpdateCache(id int, b model.Book, mt *sync.RWMutex) {
 	mt.Lock()
 	//defer mt.Unlock()
 	cache[id] = b

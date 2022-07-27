@@ -25,7 +25,7 @@ func GetBooks() []model.Book {
 	return books
 }
 
-func GetBookById(id int, mt *sync.Mutex) (model.Book, bool) {
+func GetBookById(id int, mt *sync.RWMutex) (model.Book, bool) {
 	time.Sleep(100 * time.Millisecond)
 	for _, b := range books {
 		if b.Id == id {
