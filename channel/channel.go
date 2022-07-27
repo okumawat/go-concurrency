@@ -8,7 +8,7 @@ import (
 
 func ChannelDemo() {
 	//Channel for goroutines communication
-	ch := make(chan int, 3)
+	ch := make(chan int, 5)
 
 	//Waitgroup for coordination
 	wg := &sync.WaitGroup{}
@@ -35,10 +35,15 @@ func SendData(ch chan<- int) {
 		fmt.Println("Data Sent:", i)
 		ch <- i
 	}
+	close(ch)
 }
 
 func ReceiveData(ch <-chan int) {
-	for i := 0; i < 5; i++ {
-		fmt.Println("Data received from channel:", <-ch)
+	for msg := range ch {
+		fmt.Println("Data received from channel:", msg)
+		// if msg, ok := <-ch; ok {
+		// 	fmt.Println("Data received from channel:", msg)
+		// }
 	}
+	//close(ch)
 }
